@@ -35,6 +35,7 @@ public class FormulaireState extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+            DAO d = new DAO(DataSourceFactory.getDataSource());
             String state = request.getParameter("state");
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -44,13 +45,11 @@ public class FormulaireState extends HttpServlet {
             out.println("<body>");
             try {
                 out.println("  <form action='ShowClientByState'>\n"+
-                            "  <select id='state' name='state'>\n" +
-                            "  <option value='CA'>Canada</option>\n" +
-                            "  <option value='NY'>New York</option>\n" +
-                            "  <option value='MI'>Mississippi</option>\n" +
-                            "  <option value='TX'>Texas</option>\n" +
-                            "  <option value='GA'>Las Vegas</option>\n" +
-                            "  </select>\n " +
+                            "  <select id='state' name='state'>\n");
+                for(String s :d.ListOfState()){
+                            out.println("  <option value='"+s+"'>"+s+"</option>\n");
+                                    }
+                out.println("  </select>\n " +
                             "  <input type='submit'>\n" +
                             "  </form>");
                 
